@@ -1,20 +1,10 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
 
-export default function Main() {
+export default function Main(props) {
 
     
-  function handleEditAvatarClick() {
-    document.querySelector(".popup_name_avatar").classList.add("popup_opend");
-  }
 
-  function handleEditProfileClick() {
-    document.querySelector(".popup_name_profile").classList.add("popup_opend");
-  }
-
-  function handleAddPlaceClick() {
-    document.querySelector(".popup_name_element").classList.add("popup_opend");
-  }
 
   return (
     <main className="main">
@@ -23,7 +13,7 @@ export default function Main() {
           <button
             className="profile__avatar-button"
             type="button"
-            onClick={handleEditAvatarClick}
+            onClick={props.onEditAvatar}
           >
             <img className="profile__avatar" src="#" alt="аватар" />
           </button>
@@ -34,7 +24,7 @@ export default function Main() {
               className="profile__edit-button"
               type="button"
               aria-label="редактировать профиль"
-              onClick={handleEditProfileClick}
+              onClick={props.onEditProfile}
             ></button>
             <p className="profile__profession">исследователь океана</p>
           </div>
@@ -43,7 +33,7 @@ export default function Main() {
           className="profile__add-button"
           type="button"
           aria-label="добавить карточку"
-          onClick={handleAddPlaceClick}
+          onClick={props.onAddPlace}
         ></button>
       </section>
       <section className="elements">
