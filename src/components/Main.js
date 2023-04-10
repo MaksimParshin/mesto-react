@@ -1,11 +1,29 @@
 import React from "react";
 
 export default function Main() {
+
+    
+  function handleEditAvatarClick() {
+    document.querySelector(".popup_name_avatar").classList.add("popup_opend");
+  }
+
+  function handleEditProfileClick() {
+    document.querySelector(".popup_name_profile").classList.add("popup_opend");
+  }
+
+  function handleAddPlaceClick() {
+    document.querySelector(".popup_name_element").classList.add("popup_opend");
+  }
+
   return (
     <main className="main">
       <section className="profile">
         <div className="profile__container">
-          <button className="profile__avatar-button" type="button">
+          <button
+            className="profile__avatar-button"
+            type="button"
+            onClick={handleEditAvatarClick}
+          >
             <img className="profile__avatar" src="#" alt="аватар" />
           </button>
 
@@ -15,6 +33,7 @@ export default function Main() {
               className="profile__edit-button"
               type="button"
               aria-label="редактировать профиль"
+              onClick={handleEditProfileClick}
             ></button>
             <p className="profile__profession">исследователь океана</p>
           </div>
@@ -23,6 +42,7 @@ export default function Main() {
           className="profile__add-button"
           type="button"
           aria-label="добавить карточку"
+          onClick={handleAddPlaceClick}
         ></button>
       </section>
       <section className="elements">
