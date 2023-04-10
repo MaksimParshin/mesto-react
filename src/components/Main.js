@@ -22,13 +22,12 @@ export default function Main(props) {
   React.useEffect(() => {
     API.getInitialCards()
       .then((data) => {
-        console.log(data);
         setCards(data);
       })
       .catch((err) => console.log(err));
   }, []);
 
-const elements = cards.map(card=>(<Card key={card._id} card={card} onCardClick={props.onCardClick}/>))
+  const elements = cards.map(card=>(<Card key={card._id} card={card} onCardClick={props.onCardClick}/>))
 
   return (
     <main className="main">

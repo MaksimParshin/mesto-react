@@ -9,6 +9,8 @@
   border: none;
   background: transparent;
   transition: background-color 0.3s linear;
+  position: relative;
+  z-index: 2;
 
 }
 
@@ -19,4 +21,5 @@
   background-size: 26px 26px;
   background-color: rgba(0, 0, 0, .8);
   cursor: pointer;
+
 }
