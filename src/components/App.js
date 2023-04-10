@@ -1,42 +1,14 @@
 import React from "react";
-import Logo from "./images/logo.svg";
+import Header from "./Header";
+import Main from "./Main";
+import Footer from "./Footer";
 
 function App() {
   return (
     <div className="page">
-      <header className="header">
-        <img className="header__logo" src={Logo} alt="Логотип место" />
-      </header>
-      <main className="main">
-        <section className="profile">
-          <div className="profile__container">
-            <button className="profile__avatar-button" type="button">
-              <img className="profile__avatar" src="#" alt="аватар" />
-            </button>
-
-            <div className="profile__info">
-              <h1 className="profile__name">Жак-Ив Кусто</h1>
-              <button
-                className="profile__edit-button"
-                type="button"
-                aria-label="редактировать профиль"
-              ></button>
-              <p className="profile__profession">исследователь океана</p>
-            </div>
-          </div>
-          <button
-            className="profile__add-button"
-            type="button"
-            aria-label="добавить карточку"
-          ></button>
-        </section>
-        <section className="elements">
-          <div className="elements__list"></div>
-        </section>
-      </main>
-      <footer className="footer">
-        <p className="footer__copyright">&copy; 2023 Mesto Russia</p>
-      </footer>
+      <Header />
+      <Main />
+      <Footer />
 
       {/* <!-- попап редактирования аватара --> */}
       <div className="popup popup_name_avatar">
@@ -209,12 +181,20 @@ function App() {
       {/* <!-- шаблон карточки --> */}
       <template className="element-template">
         <div className="element">
-          <button className="element__recicle-bin" type="button" aria-label="удалить карточку"></button>
+          <button
+            className="element__recicle-bin"
+            type="button"
+            aria-label="удалить карточку"
+          ></button>
           <img className="element__image" src="#" alt="" />
           <div className="element__container">
             <h2 className="element__title"></h2>
             <div className="element__like-container">
-              <button className="element__like-button" type="button" aria-label="лайк"></button>
+              <button
+                className="element__like-button"
+                type="button"
+                aria-label="лайк"
+              ></button>
               <p className="element__like-counter">0</p>
             </div>
           </div>
