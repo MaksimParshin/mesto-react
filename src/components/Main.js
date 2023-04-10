@@ -1,4 +1,5 @@
 import React from "react";
+import PopupWithForm from "./PopupWithForm";
 
 export default function Main() {
 
@@ -48,6 +49,7 @@ export default function Main() {
       <section className="elements">
         <div className="elements__list"></div>
       </section>
+      <PopupWithForm/>
     </main>
   );
 }
