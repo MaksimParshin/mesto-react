@@ -11,6 +11,7 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
     React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
+  const [selectedCard, setSelectedCard] = React.useState(null);
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
@@ -28,6 +29,12 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
+    setSelectedCard(null);
+  }
+
+  function handleCardClick(card) {
+
+    setSelectedCard(card);
   }
 
   return (
@@ -37,6 +44,7 @@ function App() {
         onEditAvatar={handleEditAvatarClick}
         onEditProfile={handleEditProfileClick}
         onAddPlace={handleAddPlaceClick}
+        onCardClick={handleCardClick}
       />
       <Footer />
       <ImagePopup />
@@ -129,29 +137,7 @@ function App() {
           </>
         }
       />
-
-      {/* <!-- шаблон карточки --> */}
-      <template className="element-template">
-        <div className="element">
-          <button
-            className="element__recicle-bin"
-            type="button"
-            aria-label="удалить карточку"
-          ></button>
-          <img className="element__image" src="#" alt="" />
-          <div className="element__container">
-            <h2 className="element__title"></h2>
-            <div className="element__like-container">
-              <button
-                className="element__like-button"
-                type="button"
-                aria-label="лайк"
-              ></button>
-              <p className="element__like-counter">0</p>
-            </div>
-          </div>
-        </div>
-      </template>
+       <ImagePopup card={selectedCard} onClose={closeAllPopups}/>
     </div>
   );
 }
