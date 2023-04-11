@@ -16,7 +16,7 @@ function App() {
     elem: {},
   });
 
-  // console.log(selectedCard)
+
 
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
@@ -34,7 +34,7 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
-    setSelectedCard({ isOpen: false, elem: {} });
+    setSelectedCard({isOpen: false, elem: {}});
   }
 
   function handleCardClick(card) {
