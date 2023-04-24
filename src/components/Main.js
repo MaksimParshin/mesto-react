@@ -2,56 +2,18 @@ import React from "react";
 import Card from "./Card";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 // import {CardsContext} from '../contexts/CardsContext'
-import { API } from "../utils/Api";
 
-export default function Main(props) {
-  const [cards, setCards] = React.useState([]);
-
-  React.useEffect(() => {
-    API.getInitialCards()
-      .then((data) => {
-        setCards(data);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
+export default function Main({cards, onEditAvatar, onEditProfile, onAddPlace, onCardClick, onCardLike, onCardDelete}) {
+  
   const currentUser = React.useContext(CurrentUserContext);
-  // const cards = React.useContext(CardsContext);
-
-  function handleCardLike(card) {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
-    
-    if (isLiked) {
-      API.deleteLike(card._id).then((newCard) => {
-        setCards((state) =>
-          state.map((c) => (c._id === card._id ? newCard : c))
-        );
-      });
-    } else {
-      API.putLike(card._id).then((newCard) => {
-        setCards((state) =>
-          state.map((c) => (c._id === card._id ? newCard : c))
-        );
-      });
-    }
-  }
-
-  function handleCardDelete(card) {
-    API.deleteCard(card._id).then((data)=> {
-      console.log(data)
-      setCards((state) =>
-
-      state.filter((c) => (c._id !== card._id))
-    );
-    });
-  }
+  
   const elements = cards.map((card) => (
     <Card
       key={card._id}
       card={card}
-      onCardClick={props.onCardClick}
-      onCardLike={handleCardLike}
-      onCardDelete={handleCardDelete}
+      onCardClick={onCardClick}
+      onCardLike={onCardLike}
+      onCardDelete={onCardDelete}
     />
   ));
 
@@ -62,7 +24,7 @@ export default function Main(props) {
           <button
             className="profile__avatar-button"
             type="button"
-            onClick={props.onEditAvatar}
+            onClick={onEditAvatar}
           >
             <img
               className="profile__avatar-img"
@@ -78,7 +40,7 @@ export default function Main(props) {
               className="profile__edit-button"
               type="button"
               aria-label="редактировать профиль"
-              onClick={props.onEditProfile}
+              onClick={onEditProfile}
             ></button>
             <p className="profile__profession">{currentUser.about}</p>
           </div>
@@ -87,7 +49,7 @@ export default function Main(props) {
           className="profile__add-button"
           type="button"
           aria-label="добавить карточку"
-          onClick={props.onAddPlace}
+          onClick={onAddPlace}
         ></button>
       </section>
       <section className="elements">
