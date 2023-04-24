@@ -1,12 +1,16 @@
 import React from "react";
 
-export default function PopupWithForm({name, title, children, buttonText, onClose, isOpend}) {
+export default function PopupWithForm({
+  name,
+  title,
+  children,
+  buttonText,
+  onClose,
+  isOpend,
+  onSubmit,
+}) {
   return (
-    <div
-      className={`popup popup_name_${name} ${
-        isOpend ? "popup_opend" : ""
-      }`}
-    >
+    <div className={`popup popup_name_${name} ${isOpend ? "popup_opend" : ""}`}>
       <div className="popup__container popup__container_name_avatar">
         <button
           className="popup__close-button"
@@ -16,6 +20,7 @@ export default function PopupWithForm({name, title, children, buttonText, onClos
         ></button>
         <h2 className="popup__title">{title}</h2>
         <form
+          onSubmit={onSubmit}
           className={`popup__form popup__form_name_${name}`}
           method="post"
           name={`form-popup_name_${name}`}

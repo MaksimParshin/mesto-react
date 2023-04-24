@@ -1,26 +1,11 @@
 import React from "react";
-import { API } from "../utils/Api";
 import Card from "./Card";
-import {CurrentUserContext} from '../contexts/CurrentUserContext'
-
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
+// import {CardsContext} from '../contexts/CardsContext'
+import { API } from "../utils/Api";
 
 export default function Main(props) {
-  // const [userName, setUserName] = React.useState("");
-  // const [userDescription, setUserDescription] = React.useState("");
-  // const [userAvatar, setUserAvatar] = React.useState("");
   const [cards, setCards] = React.useState([]);
-
-  const currentUser = React.useContext(CurrentUserContext)
-
-  // React.useEffect(() => {
-  //   API.getUserInfo()
-  //     .then((data) => {
-  //       setUserName(data.name);
-  //       setUserDescription(data.about);
-  //       setUserAvatar(data.avatar);
-  //     })
-  //     .catch((err) => console.log(err));
-  // }, []);
 
   React.useEffect(() => {
     API.getInitialCards()
@@ -30,7 +15,45 @@ export default function Main(props) {
       .catch((err) => console.log(err));
   }, []);
 
-  const elements = cards.map(card=>(<Card key={card._id} card={card} onCardClick={props.onCardClick}/>))
+  const currentUser = React.useContext(CurrentUserContext);
+  // const cards = React.useContext(CardsContext);
+
+  function handleCardLike(card) {
+    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    
+    if (isLiked) {
+      API.deleteLike(card._id).then((newCard) => {
+        setCards((state) =>
+          state.map((c) => (c._id === card._id ? newCard : c))
+        );
+      });
+    } else {
+      API.putLike(card._id).then((newCard) => {
+        setCards((state) =>
+          state.map((c) => (c._id === card._id ? newCard : c))
+        );
+      });
+    }
+  }
+
+  function handleCardDelete(card) {
+    API.deleteCard(card._id).then((data)=> {
+      console.log(data)
+      setCards((state) =>
+
+      state.filter((c) => (c._id !== card._id))
+    );
+    });
+  }
+  const elements = cards.map((card) => (
+    <Card
+      key={card._id}
+      card={card}
+      onCardClick={props.onCardClick}
+      onCardLike={handleCardLike}
+      onCardDelete={handleCardDelete}
+    />
+  ));
 
   return (
     <main className="main">
@@ -68,11 +91,8 @@ export default function Main(props) {
         ></button>
       </section>
       <section className="elements">
-        <div className="elements__list">
-            {elements}
-        </div>
+        <div className="elements__list">{elements}</div>
       </section>
-     
     </main>
   );
 }
