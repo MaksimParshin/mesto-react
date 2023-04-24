@@ -4,8 +4,22 @@ import Main from "./Main";
 import Footer from "./Footer";
 import ImagePopup from "./ImagePopup";
 import PopupWithForm from "./PopupWithForm";
+import {CurrentUserContext} from '../contexts/CurrentUserContext'
+import { API } from "../utils/Api";
 
 function App() {
+const [currentUser, setCurrentUser] = React.useState({});
+// console.log(currentUser)
+React.useEffect(() => {
+  API.getUserInfo()
+    .then((data) => {
+      console.log(data)
+      setCurrentUser(data);
+    })
+    .catch((err) => console.log(err));
+}, []);
+
+
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] =
     React.useState(false);
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
@@ -43,6 +57,7 @@ function App() {
 
   return (
     <div className="page">
+    <CurrentUserContext.Provider value={currentUser}>
       <Header />
       <Main
         onEditAvatar={handleEditAvatarClick}
@@ -52,7 +67,7 @@ function App() {
       />
       <Footer />
       <PopupWithForm
-        name="avata"
+        name="avatar"
         title="Обновить аватар"
         buttonText={"Сохранить"}
         isOpend={isEditAvatarPopupOpen}
@@ -132,6 +147,7 @@ function App() {
         </label>
       </PopupWithForm>
       <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+      </CurrentUserContext.Provider>
     </div>
   );
 }

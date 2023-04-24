@@ -1,23 +1,26 @@
 import React from "react";
 import { API } from "../utils/Api";
 import Card from "./Card";
+import {CurrentUserContext} from '../contexts/CurrentUserContext'
 
 
 export default function Main(props) {
-  const [userName, setUserName] = React.useState("");
-  const [userDescription, setUserDescription] = React.useState("");
-  const [userAvatar, setUserAvatar] = React.useState("");
+  // const [userName, setUserName] = React.useState("");
+  // const [userDescription, setUserDescription] = React.useState("");
+  // const [userAvatar, setUserAvatar] = React.useState("");
   const [cards, setCards] = React.useState([]);
 
-  React.useEffect(() => {
-    API.getUserInfo()
-      .then((data) => {
-        setUserName(data.name);
-        setUserDescription(data.about);
-        setUserAvatar(data.avatar);
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  const currentUser = React.useContext(CurrentUserContext)
+
+  // React.useEffect(() => {
+  //   API.getUserInfo()
+  //     .then((data) => {
+  //       setUserName(data.name);
+  //       setUserDescription(data.about);
+  //       setUserAvatar(data.avatar);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, []);
 
   React.useEffect(() => {
     API.getInitialCards()
@@ -40,21 +43,21 @@ export default function Main(props) {
           >
             <img
               className="profile__avatar-img"
-              src={userAvatar}
+              src={currentUser.avatar}
               alt="аватар"
             ></img>
             <div className="profile__avatar"></div>
           </button>
 
           <div className="profile__info">
-            <h1 className="profile__name">{userName}</h1>
+            <h1 className="profile__name">{currentUser.name}</h1>
             <button
               className="profile__edit-button"
               type="button"
               aria-label="редактировать профиль"
               onClick={props.onEditProfile}
             ></button>
-            <p className="profile__profession">{userDescription}</p>
+            <p className="profile__profession">{currentUser.about}</p>
           </div>
         </div>
         <button
