@@ -12,9 +12,7 @@ import AddPlacePopup from "./AddPlacePopup";
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
 
-  // console.log(currentUser)
-
-  // https://i.imgur.com/XWOuu8G.gif
+ 
 
   React.useEffect(() => {
     API.getUserInfo()
@@ -150,3 +148,4 @@ function App() {
 }
 
 export default App;
+
