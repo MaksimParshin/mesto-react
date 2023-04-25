@@ -12,7 +12,7 @@ export default function PopupWithForm({
 
 
   return (
-    <div onClick={onClose} className={`popup popup_name_${name} ${isOpend ? "popup_opend" : ""}`}>
+    <div className={`popup popup_name_${name} ${isOpend ? "popup_opend" : ""}`}>
       <div className="popup__container popup__container_name_avatar">
         <button
           className="popup__close-button"

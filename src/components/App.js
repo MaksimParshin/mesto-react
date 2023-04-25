@@ -60,7 +60,6 @@ function App() {
         closeAllPopups();
       })
       .catch((err) => console.log(err));
-    closeAllPopups();
   }
 
   function handleUpdateAvatar(data) {
@@ -86,11 +85,13 @@ function App() {
     const isLiked = card.likes.some((i) => i._id === currentUser._id);
 
     if (isLiked) {
-      API.deleteLike(card._id).then((newCard) => {
-        setCards((state) =>
-          state.map((c) => (c._id === card._id ? newCard : c))
-        ).catch((err) => console.log(err));
-      });
+      API.deleteLike(card._id)
+        .then((newCard) => {
+          setCards((state) =>
+            state.map((c) => (c._id === card._id ? newCard : c))
+          );
+        })
+        .catch((err) => console.log(err));
     } else {
       API.putLike(card._id)
         .then((newCard) => {
@@ -134,8 +135,7 @@ function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-    <div className="page">
-     
+      <div className="page">
         <Header />
         <Main
           cards={cards}
@@ -167,8 +167,7 @@ function App() {
         />
 
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
-    
-    </div>
+      </div>
     </CurrentUserContext.Provider>
   );
 }
