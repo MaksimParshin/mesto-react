@@ -1,14 +1,18 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
 
-export default function AddPlacePopup({ isOpend, onClose, onAddPlace }) {
+export default function AddPlacePopup({
+  isOpend,
+  onClose,
+  onAddPlace,
+  isLoading,
+}) {
   const [card, setCard] = React.useState({ name: "", link: "" });
 
-
-function handleChangeCard(evt) {
-    const {name, value} = evt.target;
-    setCard(prevState=>({...prevState, [name]: value}))
-}
+  function handleChangeCard(evt) {
+    const { name, value } = evt.target;
+    setCard((prevState) => ({ ...prevState, [name]: value }));
+  }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -18,13 +22,14 @@ function handleChangeCard(evt) {
       link: card.link,
     });
   }
+
   return (
     <PopupWithForm
       name="element"
       title="Новое место"
       isOpend={isOpend}
       onClose={onClose}
-      buttonText={"Создать"}
+      buttonText={isLoading ? "Создание..." : "Создать"}
       onSubmit={handleSubmit}
     >
       <label className="popup__label">
