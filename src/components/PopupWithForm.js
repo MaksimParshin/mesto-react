@@ -15,7 +15,7 @@ export default function PopupWithForm({
 
   return (
     <div className={`popup popup_name_${name} ${isOpend ? "popup_opend" : ""}`} onClick={handleCloseOverlay}>
-      <div className="popup__container popup__container_name_avatar">
+      <div className={`popup__container popup__container_name_${name}`}>
         <button
           className="popup__close-button"
           type="button"

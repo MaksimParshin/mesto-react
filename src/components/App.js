@@ -185,7 +185,7 @@ function App() {
           handleCloseOverlay={handleCloseOverlay}
         />
 
-        <ImagePopup card={selectedCard} onClose={closeAllPopups} />
+        <ImagePopup card={selectedCard} onClose={closeAllPopups} handleCloseOverlay={handleCloseOverlay}/>
       </div>
     </CurrentUserContext.Provider>
   );
