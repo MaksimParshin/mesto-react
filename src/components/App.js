@@ -62,7 +62,7 @@ function App() {
         closeAllPopups();
       })
       .catch((err) => console.log(err))
-      .finally(()=>setIsLoading(false));
+      .finally(() => setIsLoading(false));
   }
 
   function handleUpdateAvatar(data) {
@@ -73,7 +73,7 @@ function App() {
         closeAllPopups();
       })
       .catch((err) => console.log(err))
-      .finally(()=>setIsLoading(false));
+      .finally(() => setIsLoading(false));
   }
 
   const [cards, setCards] = React.useState([]);
@@ -117,14 +117,14 @@ function App() {
   }
 
   function handleAddPlaceSubmit(item) {
-    setIsLoading(true)
+    setIsLoading(true);
     API.createCard(item)
       .then((card) => {
         setCards([card, ...cards]);
         closeAllPopups();
       })
       .catch((err) => console.log(err))
-      .finally(()=>setIsLoading(false));
+      .finally(() => setIsLoading(false));
   }
 
   function closeEsc(event) {
@@ -140,6 +140,12 @@ function App() {
     };
   }, []);
 
+  function handleCloseOverlay(evt) {
+    if (evt.target.classList.contains("popup_opend")) {
+      closeAllPopups();
+    }
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -152,7 +158,6 @@ function App() {
           onCardClick={handleCardClick}
           onCardLike={handleCardLike}
           onCardDelete={handleCardDelete}
-         
         />
 
         <Footer />
@@ -162,12 +167,14 @@ function App() {
           onClose={closeAllPopups}
           onUpdateAvatar={handleUpdateAvatar}
           isLoading={isLoading}
+          handleCloseOverlay={handleCloseOverlay}
         />
         <EditProfilePopup
           isOpend={isEditProfilePopupOpen}
           onClose={closeAllPopups}
           onUpdateUser={handleUpdateUser}
           isLoading={isLoading}
+          handleCloseOverlay={handleCloseOverlay}
         />
 
         <AddPlacePopup
@@ -175,6 +182,7 @@ function App() {
           onClose={closeAllPopups}
           onAddPlace={handleAddPlaceSubmit}
           isLoading={isLoading}
+          handleCloseOverlay={handleCloseOverlay}
         />
 
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />

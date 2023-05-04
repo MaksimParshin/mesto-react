@@ -6,6 +6,7 @@ export default function AddPlacePopup({
   onClose,
   onAddPlace,
   isLoading,
+  handleCloseOverlay
 }) {
   const [card, setCard] = React.useState({ name: "", link: "" });
 
@@ -31,6 +32,7 @@ export default function AddPlacePopup({
       onClose={onClose}
       buttonText={isLoading ? "Создание..." : "Создать"}
       onSubmit={handleSubmit}
+      handleCloseOverlay={handleCloseOverlay}
     >
       <label className="popup__label">
         <input
