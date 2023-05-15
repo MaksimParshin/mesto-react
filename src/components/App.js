@@ -8,6 +8,7 @@ import { API } from "../utils/Api";
 import EditProfilePopup from "./EditProfilePopup";
 import EditAvatarPopup from "./EditAvatarPopup";
 import AddPlacePopup from "./AddPlacePopup";
+import RecycleBinPopup from "./RecycleBinPopup";
 
 function App() {
   const [currentUser, setCurrentUser] = React.useState({});
@@ -25,12 +26,13 @@ function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] =
     React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
-  const [selectedCard, setSelectedCard] = React.useState({
-    isOpen: false,
-    elem: {},
-  });
+  const [selectedCard, setSelectedCard] = React.useState({});
   const [isLoading, setIsLoading] = React.useState(false);
 
+  const [isRecycleBinPopupOpen, setIsRecycleBinPopupOpen] =
+    React.useState(false);
+
+  // console.log(selectedCard);
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
   }
@@ -47,11 +49,12 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
-    setSelectedCard({ isOpen: false, elem: {} });
+    setIsRecycleBinPopupOpen(false);
+    setSelectedCard({});
   }
 
   function handleCardClick(card) {
-    setSelectedCard({ ...selectedCard, isOpen: true, elem: card });
+    setSelectedCard(card);
   }
 
   function handleUpdateUser(data) {
@@ -109,11 +112,19 @@ function App() {
   }
 
   function handleCardDelete(card) {
-    API.deleteCard(card._id)
+    setIsRecycleBinPopupOpen(true);
+    setSelectedCard(card);
+  }
+
+  function handeleRecicleBinClick() {
+    setIsLoading(true);
+    API.deleteCard(selectedCard._id)
       .then((data) => {
-        setCards((state) => state.filter((c) => c._id !== card._id));
+        setCards((state) => state.filter((c) => c._id !== selectedCard._id));
+        closeAllPopups();
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log(err))
+      .finally(() => setIsLoading(false));
   }
 
   function handleAddPlaceSubmit(item) {
@@ -184,8 +195,19 @@ function App() {
           isLoading={isLoading}
           handleCloseOverlay={handleCloseOverlay}
         />
-
-        <ImagePopup card={selectedCard} onClose={closeAllPopups} handleCloseOverlay={handleCloseOverlay}/>
+        <RecycleBinPopup
+          card={selectedCard}
+          isOpend={isRecycleBinPopupOpen}
+          onClose={closeAllPopups}
+          isLoading={isLoading}
+          onDeletCard={handeleRecicleBinClick}
+          handleCloseOverlay={handleCloseOverlay}
+        />
+        <ImagePopup
+          card={selectedCard}
+          onClose={closeAllPopups}
+          handleCloseOverlay={handleCloseOverlay}
+        />
       </div>
     </CurrentUserContext.Provider>
   );
